@@ -11,7 +11,6 @@ const SELECTORS = {
 };
 
 const CLASSES = {
-  invalid: 'is-invalid',
   statusSuccess: 'form-status--success',
   statusError: 'form-status--error',
 };
@@ -59,10 +58,7 @@ async function handleSubmit(event) {
 
   if (!validationResult.isValid) {
     // Focus first invalid field
-    const firstInvalidField = form.querySelector(`.${CLASSES.invalid}`);
-    if (firstInvalidField) {
-      firstInvalidField.focus();
-    }
+    validationResult.errors[0].element.focus();
     return;
   }
 
@@ -93,7 +89,7 @@ async function handleSubmit(event) {
 function handleFieldBlur(event) {
   const field = event.target;
 
-  if (field.hasAttribute('required') || field.value) {
+  if (field.required || field.value) {
     validateField(field);
   }
 }
